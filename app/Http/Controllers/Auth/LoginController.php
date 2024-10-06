@@ -42,6 +42,8 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
+        session()->flash('login_success', 'Inicio de sesión exitoso.');
+        
         return redirect()->route('home'); // Redirige al "home" después del login
     }
 }
