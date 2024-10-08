@@ -3,16 +3,11 @@
 @section('content')
     <section>
         <div class="container py-5">
-
             <div class="row">
-
                 <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
-
                     <h5 class="font-weight-bold mb-3 text-center text-lg-start">Chats</h5>
-
                     <div class="card">
                         <div class="card-body">
-
                             <ul class="list-unstyled mb-0">
                                 <li class="p-2 border-bottom bg-body-tertiary">
                                     <a href="#!" class="d-flex justify-content-between">
