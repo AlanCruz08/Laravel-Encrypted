@@ -4,19 +4,9 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    Bienvendio a la aplicación de Laravel
-                </div>
-            </div>
+            <p class="h1">Bienvenido a la aplicación de Mensajes encriptados</p>
+            <p class="lead">En esta aplicación podrás enviar mensajes encriptados a tus amigos y familiares.</p>
+            <p class="lead">Para comenzar, inicia sesion o registrate.</p>
         </div>
     </div>
 </div>
