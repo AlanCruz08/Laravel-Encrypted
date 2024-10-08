@@ -17,15 +17,7 @@ class HomeController extends Controller
             return redirect()->route('login');
         }
 
-        $contactos = User::where('id', '!=', $currentUser->id)
-            ->where(function ($query) use ($currentUser) {
-                $query->whereHas('sentMessages', function ($q) use ($currentUser) {
-                    $q->where('receiver_id', $currentUser->id);
-                })->orWhereHas('receivedMessages', function ($q) use ($currentUser) {
-                    $q->where('sender_id', $currentUser->id);
-                });
-            })
-            ->get();
+        $contactos = $this->getContactInfo($currentUser);
 
         $selectedContact = null;
         $mensajes = collect();
@@ -45,5 +37,43 @@ class HomeController extends Controller
         }
 
         return view('home', compact('contactos', 'mensajes', 'selectedContact'));
+    }
+
+    private function getContactInfo($currentUser)
+    {
+        $contacts = User::whereIn('id', function ($query) use ($currentUser) {
+            $query->selectRaw('CASE 
+                                    WHEN sender_id = ? THEN receiver_id 
+                                    ELSE sender_id 
+                                END as contact_id', [$currentUser->id])
+                  ->from('messages')
+                  ->where(function ($query) use ($currentUser) {
+                      $query->where('sender_id', $currentUser->id)
+                            ->orWhere('receiver_id', $currentUser->id);
+                  })
+                  ->distinct();
+        })->get();
+    
+        return $contacts->map(function ($contact) use ($currentUser) {
+            $lastSentMessage = $contact->sentMessages()->latest()->first();
+            $lastReceivedMessage = $contact->receivedMessages()->latest()->first();
+    
+            if ($lastSentMessage && $lastReceivedMessage) {
+                $lastMessage = $lastSentMessage->created_at > $lastReceivedMessage->created_at ? $lastSentMessage : $lastReceivedMessage;
+            } elseif ($lastSentMessage) {
+                $lastMessage = $lastSentMessage;
+            } elseif ($lastReceivedMessage) {
+                $lastMessage = $lastReceivedMessage;
+            } else {
+                $lastMessage = null;
+            }
+    
+            return [
+                'id' => $contact->id,
+                'name' => $contact->name,
+                'message' => $lastMessage ? $lastMessage->content : 'No hay mensajes',
+                'hour' => $lastMessage ? $lastMessage->created_at->format('H:i') : 'No disponible',
+            ];
+        });
     }
 }

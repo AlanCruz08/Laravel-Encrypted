@@ -10,30 +10,29 @@
                     <div class="card">
                         <div class="card-body">
                             @if ($contactos->isEmpty())
-                                <p class="text-center">Prueba a iniciar una conversación</p>
+                                <p class="text-center">Prueba a iniciar una conversacion</p>
                                 <a href="{{ route('new.message') }}" class="btn btn-primary d-block mx-auto">Enviar
                                     mensaje</a>
-                            @else
-                                <ul class="list-unstyled mb-0">
-                                    @foreach ($contactos as $contacto)
-                                        <li class="p-2 border-bottom {{ $loop->first ? 'bg-body-tertiary' : '' }}">
-                                            <a href="{{ route('conversation', $contacto->id) }}"
-                                                class="d-flex justify-content-between">
-                                                <div class="d-flex flex-row">
-                                                    <div class="pt-1">
-                                                        <p class="fw-bold mb-0">{{ $contacto->name }}</p>
-                                                        <p class="small text-muted">
-                                                            {{ Str::limit($contacto->lastMessageContent, 30) }}</p>
-                                                    </div>
-                                                </div>
-                                                <div class="pt-1">
-                                                    <p class="small text-muted mb-1">{{ $contacto->lastMessageTime }}</p>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
                             @endif
+                            <ul class="list-unstyled mb-0">
+                                @foreach ($contactos as $contacto)
+                                    <li class="p-2 border-bottom {{ $loop->first ? 'bg-body-tertiary' : '' }}">
+                                        <a href="{{ route('conversation', $contacto['id']) }}" class="d-flex justify-content-between">
+                                            <div class="d-flex flex-row">
+                                                <div class="pt-1">
+                                                    <p class="fw-bold mb-0">{{ $contacto['name'] }}
+                                                    </p>
+                                                    <p class="small text-muted">{{ Str::limit($contacto['message'], 30) }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="pt-1">
+                                                <p class="small text-muted mb-1">{{ $contacto['hour'] }}</p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
                         </div>
                     </div>
                 </div>
