@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
+use App\Events\NewMessage;
 
 class ChatController extends Controller
 {
@@ -20,7 +21,9 @@ class ChatController extends Controller
                 ->where('receiver_id', auth()->user()->id);
         })->orderBy('created_at', 'asc')->get();
 
-        return view('chat', compact('user', 'messages')); 
+        $contactos = User::where('id', '!=', auth()->user()->id)->get(); 
+
+        return view('chat', compact('user', 'messages', 'contactos')); 
     }
 
     public function sendMessage(Request $request, User $user)
@@ -33,12 +36,14 @@ class ChatController extends Controller
 
         Log:info('Mensaje encriptado: ' . $encryptedMessage);
 
-        Message::create([
+        $message = Message::create([
             'sender_id' => auth()->user()->id,
             'receiver_id' => $user->id,
-            'content' => $encryptedMessage, // Guardar en el campo 'content'
+            'content' => $encryptedMessage, 
         ]);
-
+    
+        event(new NewMessage($message)); // Ahora $message está definido
+    
         return redirect()->back()->with('status', 'Mensaje enviado correctamente'); 
     }
 }

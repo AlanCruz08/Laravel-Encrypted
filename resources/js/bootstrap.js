@@ -1,4 +1,18 @@
 import 'bootstrap';
+import Echo from 'laravel-echo';
+
+window.Pusher = require('pusher-js');
+
+window.$ = window.jQuery = require('jquery');
+
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: import.meta.env.VITE_PUSHER_APP_KEY, // Puedes usar cualquier clave aquí, no se usa con Laravel WebSockets
+    wsHost: window.location.hostname,
+    wsPort: 6001,
+    forceTLS: false,
+    disableStats: true,
+});
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
