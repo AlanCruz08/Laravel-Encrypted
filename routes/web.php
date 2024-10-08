@@ -18,3 +18,4 @@ Route::get('register', [RegisterController::class, 'showRegistrationForm'])->nam
 Route::post('register', [RegisterController::class, 'register']);
 Route::get('verify-code', [VerificationController::class, 'showVerifyCodeForm'])->name('verify.code.form');
 Route::post('verify-code', [RegisterController::class, 'verifyCode'])->name('verify.code');
+Route::get('/new-message', [MessageController::class, 'index'])->name('new.message');

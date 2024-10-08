@@ -8,160 +8,34 @@
                     <h5 class="font-weight-bold mb-3 text-center text-lg-start">Chats</h5>
                     <div class="card">
                         <div class="card-body">
+                            @if ($contactos->isEmpty())
+                                <p class="text-center">Prueba a iniciar una conversacion</p>
+                                <a href="{{ route('new.message') }}" class="btn btn-primary d-block mx-auto">Enviar mensaje</a>
+                            @endif
                             <ul class="list-unstyled mb-0">
-                                <li class="p-2 border-bottom bg-body-tertiary">
-                                    <a href="#!" class="d-flex justify-content-between">
-                                        <div class="d-flex flex-row">
-                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp"
-                                                alt="avatar"
-                                                class="rounded-circle d-flex align-self-center me-3 shadow-1-strong"
-                                                width="60">
-                                            <div class="pt-1">
-                                                <p class="fw-bold mb-0">John Doe</p>
-                                                <p class="small text-muted">Hello, Are you there?</p>
+                                @foreach ($contactos as $contacto)
+                                    <li class="p-2 border-bottom {{ $loop->first ? 'bg-body-tertiary' : '' }}">
+                                        <a href="#!" class="d-flex justify-content-between">
+                                            <div class="d-flex flex-row">
+                                                <div class="pt-1">
+                                                    <p class="fw-bold mb-0">{{ $contacto['name'] }}
+                                                    </p>
+                                                    <p class="small text-muted">{{ Str::limit($contacto['message'], 30) }}</p>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="pt-1">
-                                            <p class="small text-muted mb-1">Just now</p>
-                                            <span class="badge bg-danger float-end">1</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="p-2 border-bottom">
-                                    <a href="#!" class="d-flex justify-content-between">
-                                        <div class="d-flex flex-row">
-                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-1.webp"
-                                                alt="avatar"
-                                                class="rounded-circle d-flex align-self-center me-3 shadow-1-strong"
-                                                width="60">
                                             <div class="pt-1">
-                                                <p class="fw-bold mb-0">Danny Smith</p>
-                                                <p class="small text-muted">Lorem ipsum dolor sit.</p>
+                                                <p class="small text-muted mb-1">{{ $contacto['hour'] }}</p>
                                             </div>
-                                        </div>
-                                        <div class="pt-1">
-                                            <p class="small text-muted mb-1">5 mins ago</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="p-2 border-bottom">
-                                    <a href="#!" class="d-flex justify-content-between">
-                                        <div class="d-flex flex-row">
-                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-2.webp"
-                                                alt="avatar"
-                                                class="rounded-circle d-flex align-self-center me-3 shadow-1-strong"
-                                                width="60">
-                                            <div class="pt-1">
-                                                <p class="fw-bold mb-0">Alex Steward</p>
-                                                <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                                            </div>
-                                        </div>
-                                        <div class="pt-1">
-                                            <p class="small text-muted mb-1">Yesterday</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="p-2 border-bottom">
-                                    <a href="#!" class="d-flex justify-content-between">
-                                        <div class="d-flex flex-row">
-                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-3.webp"
-                                                alt="avatar"
-                                                class="rounded-circle d-flex align-self-center me-3 shadow-1-strong"
-                                                width="60">
-                                            <div class="pt-1">
-                                                <p class="fw-bold mb-0">Ashley Olsen</p>
-                                                <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                                            </div>
-                                        </div>
-                                        <div class="pt-1">
-                                            <p class="small text-muted mb-1">Yesterday</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="p-2 border-bottom">
-                                    <a href="#!" class="d-flex justify-content-between">
-                                        <div class="d-flex flex-row">
-                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-4.webp"
-                                                alt="avatar"
-                                                class="rounded-circle d-flex align-self-center me-3 shadow-1-strong"
-                                                width="60">
-                                            <div class="pt-1">
-                                                <p class="fw-bold mb-0">Kate Moss</p>
-                                                <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                                            </div>
-                                        </div>
-                                        <div class="pt-1">
-                                            <p class="small text-muted mb-1">Yesterday</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="p-2 border-bottom">
-                                    <a href="#!" class="d-flex justify-content-between">
-                                        <div class="d-flex flex-row">
-                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp"
-                                                alt="avatar"
-                                                class="rounded-circle d-flex align-self-center me-3 shadow-1-strong"
-                                                width="60">
-                                            <div class="pt-1">
-                                                <p class="fw-bold mb-0">Lara Croft</p>
-                                                <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                                            </div>
-                                        </div>
-                                        <div class="pt-1">
-                                            <p class="small text-muted mb-1">Yesterday</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="p-2">
-                                    <a href="#!" class="d-flex justify-content-between">
-                                        <div class="d-flex flex-row">
-                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
-                                                alt="avatar"
-                                                class="rounded-circle d-flex align-self-center me-3 shadow-1-strong"
-                                                width="60">
-                                            <div class="pt-1">
-                                                <p class="fw-bold mb-0">Brad Pitt</p>
-                                                <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                                            </div>
-                                        </div>
-                                        <div class="pt-1">
-                                            <p class="small text-muted mb-1">5 mins ago</p>
-                                            <span class="text-muted float-end"><i class="fas fa-check"
-                                                    aria-hidden="true"></i></span>
-                                        </div>
-                                    </a>
-                                </li>
+                                        </a>
+                                    </li>
+                                @endforeach
                             </ul>
-
                         </div>
                     </div>
 
                     {{-- }} ASI SERIA MAS O MENOS CON DATOS
           <div class="card">
-            <div class="card-body">
-                <ul class="list-unstyled mb-0">
-                    */7@foreach ($contactos as $contacto)*/
-                    <li class="p-2 border-bottom */7{{ $loop->first ? 'bg-body-tertiary' : '' }}*//">
-                        <a href="#!" class="d-flex justify-content-between">
-                            <div class="d-flex flex-row">
-                                <img src="{{ $contacto->avatar }}" alt="avatar" class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-                                <div class="pt-1">
-                                    <p class="fw-bold   
-         mb-0">{{ $contacto->nombre }}</p>
-                                    <p class="small text-muted">{{ Str::limit($contacto->mensaje, 30) }}</p>
-                                </div>
-                            </div>
-                            <div class="pt-1">
-                                <p class="small text-muted mb-1">{{ $contacto->hora }}</p>
-                                @if ($contacto->tiene_mensajes_sin_leer)
-                                <span class="badge bg-danger float-end">{{ $contacto->mensajes_sin_leer }}</span>
-                                @endif
-                            </div>
-                        </a>
-                    </li>
-                    @endforeach
-                </ul>
-            </div>
+            
         </div>
         {{--}}
                 </div>
@@ -232,7 +106,7 @@
                     </ul>
                 </div>
 
-                {{-- }} ASI SERIA MAS O MENOS CON DATOS LA PARTE DEL CHAT EN SÍ
+                {{--}} ASI SERIA MAS O MENOS CON DATOS LA PARTE DEL CHAT EN SÍ
             <div class="card">
     <div class="card-body">
         <ul class="list-unstyled mb-0">
