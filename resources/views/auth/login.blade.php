@@ -1,73 +1,186 @@
-@extends('layouts.app')
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+    <!-- Scripts -->
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+</head>
 
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+<style>
+    .one-section {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        left: 0;
+        right: 0;
+        height: 100vh;
+        background: #0D152C;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+    .row {
+        height: 100%;
+        padding: 0 !important;
+    }
 
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+    .div-form {
+        position: relative;
+        background-image: url("{{ asset('img/fondo.jpg') }}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        width: 60%;
+        height: 500px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        flex-direction: column;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+        overflow: hidden;
+    }
 
-                        <div class="row mb-3">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+    .div-form::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1;
+    }
 
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+    .div-form>* {
+        position: relative;
+        z-index: 2;
+    }
 
-                        <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
+    .div-form-img {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
-                </div>
+    .div-form2 {
+        width: 100%;
+        border-bottom: 2px solid #EAEAEA;
+    }
+
+    .login-p {
+        font-size: 2rem;
+        font-weight: 700;
+        text-align: center;
+        color: #fff;
+        font-family: "Oswald", sans-serif;
+    }
+
+    .form-login {
+        width: 50%;
+    }
+
+    .center-btn {
+        display: flex;
+        justify-content: center;
+    }
+
+    .btn-custom {
+        width: 60%;
+    }
+
+    .label-login {
+        color: #fff;
+    }
+
+    .form-custom {
+        width: 100%;
+        margin: 10px;
+        padding: 10px;
+        background-color: #ffffff70 !important;
+        border: none !important;
+        border-radius: 5px !important;
+    }
+
+    .div-form3{
+        width: 100%;
+        border-top: 2px solid #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+    }
+
+    .login-p2{
+        color: #fff;
+    }
+
+    .login-a{
+        color: #fff;
+        text-decoration: none;
+    }
+
+</style>
+
+<body>
+    <section class="one-section">
+
+        <div class="div-form">
+
+            <div class="div-form2">
+                <p class="login-p">Inicio de Sesion</p>
             </div>
+
+            <form method="POST" action="{{ route('login') }}" class="form-login">
+                @csrf
+
+                <div class="mb-3">
+                    <label for="email" class="label-login">{{ __('Email Address') }}</label>
+                    <input id="email" type="email" class="form-custom @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                    @error('email')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="label-login">{{ __('Password') }}</label>
+                    <input id="password" type="password" class="form-custom @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+
+                    @error('password')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+
+                <div class="center-btn">
+                    <button type="submit" class="btn btn-outline-light btn-custom">
+                        {{ __('Login') }}
+                    </button>
+                </div>
+            </form>
+
+            <div class="div-form3">
+                <p class="login-p2">¿No tienes cuenta? <a href="{{ route('register') }}" class="login-a">Registrate</a>
+            </div>
+
         </div>
-    </div>
-</div>
-@endsection
+    </section>
+</body>
+
+</html>
