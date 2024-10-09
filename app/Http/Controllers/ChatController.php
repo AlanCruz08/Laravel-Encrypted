@@ -7,6 +7,7 @@ use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use App\Events\NewMessage;
+use Illuminate\Support\Facades\DB;
 
 class ChatController extends Controller
 {
@@ -21,7 +22,21 @@ class ChatController extends Controller
                 ->where('receiver_id', auth()->user()->id);
         })->orderBy('created_at', 'asc')->get();
 
-        $contactos = User::where('id', '!=', auth()->user()->id)->get(); 
+        $contactos = DB::table('users as u')
+        ->select('u.*', 
+                DB::raw('(SELECT content FROM messages as m
+                        WHERE m.receiver_id = ' . auth()->user()->id . ' 
+                        AND m.sender_id = u.id
+                        ORDER BY m.created_at DESC LIMIT 1) as lastMessage'),
+                DB::raw('(SELECT DATE_FORMAT(m.created_at, "%H:%i") 
+                            FROM messages as m
+                            WHERE m.receiver_id = ' . auth()->user()->id . ' 
+                            AND m.sender_id = u.id
+                            ORDER BY m.created_at DESC 
+                            LIMIT 1) as hora'))
+        ->where('u.id', '!=', auth()->user()->id)
+        ->get();
+
 
         return view('chat', compact('user', 'messages', 'contactos')); 
     }

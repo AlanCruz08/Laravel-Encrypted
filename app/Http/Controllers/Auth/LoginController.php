@@ -44,6 +44,6 @@ class LoginController extends Controller
     {
         session()->flash('login_success', 'Inicio de sesión exitoso.');
         
-        return redirect()->route('home'); // Redirige al "home" después del login
+        return redirect()->route('chat.show', 1); // Redirige al "home" después del login
     }
 }

@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
 <div class="container">
     <div class="card">
@@ -23,17 +22,16 @@
                                 <li class="p-2 border-bottom {{ $loop->first ? 'bg-body-tertiary' : '' }}">
                                     <a href="{{ route('chat.show', $contacto->id) }}" class="d-flex justify-content-between"> 
                                         <div class="d-flex flex-row">
-                                            <img src="{{ $contacto->avatar }}" alt="avatar" class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
+                                            <img src="{{ asset('img/user.png') }}" alt="avatar" class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
                                             <div class="pt-1">
-                                                <p class="fw-bold mb-0">{{ $contacto->nombre }}</p> 
-                                                <p class="small text-muted">{{ Str::limit($contacto->mensaje, 30) }}</p> 
+                                                <p class="fw-bold mb-0">{{ $contacto->name }}</p> 
+                                                <p class="small text-muted mb-1">
+                                                    {{ $contacto->lastMessage ? Str::limit(Crypt::decrypt($contacto->lastMessage), 20) : 'Sin mensajes' }}
+                                                </p>    
                                             </div>
                                         </div>
                                         <div class="pt-1">
                                             <p class="small text-muted mb-1">{{ $contacto->hora }}</p> 
-                                            @if ($contacto->tiene_mensajes_sin_leer)
-                                                <span class="badge bg-danger float-end">{{ $contacto->mensajes_sin_leer }}</span> 
-                                            @endif
                                         </div>
                                     </a>
                                 </li>
@@ -44,32 +42,34 @@
             </div>
 
             <div class="col-md-6 col-lg-7 col-xl-8">
-                <h1>Chat con {{ $user->name }}</h1>
-
+                <h1 class="mb-4">Chat con <span class="text-primary">{{ $user->name }}</span></h1>
+            
                 @if (session('status'))
                     <div class="alert alert-success">
                         {{ session('status') }}
                     </div>
                 @endif
-
-                <div id="messages" style="height: 300px; overflow-y: scroll;">
+            
+                <div id="messages" class="border rounded p-3" style="height: 300px; overflow-y: auto; background-color: #f8f9fa;">
                     @foreach ($messages as $message)
                         <div class="mb-3 {{ $message->sender_id == auth()->user()->id ? 'text-end' : '' }}" data-message-id="{{ $message->id }}"> 
-                            <p>
+                            <p class="mb-1">
                                 <strong>{{ $message->sender->name }}:</strong> 
                                 @if ($message->content)
                                     {{ Crypt::decrypt($message->content) }}
+                                @else
+                                    <em class="text-muted">Sin contenido</em>
                                 @endif
                             </p>
                             <small class="text-muted">{{ $message->created_at->diffForHumans() }}</small>
                         </div>
                     @endforeach
                 </div>
-
-                <form action="{{ route('chat.send', $user) }}" method="POST">
+            
+                <form action="{{ route('chat.send', $user) }}" method="POST" class="mt-3">
                     @csrf
                     <div class="input-group">
-                        <input type="text" name="message" id="message" class="form-control" placeholder="Escribe tu mensaje...">
+                        <input type="text" name="message" id="message" class="form-control" placeholder="Escribe tu mensaje..." required>
                         <button type="submit" class="btn btn-primary">Enviar</button>
                     </div>
                 </form>

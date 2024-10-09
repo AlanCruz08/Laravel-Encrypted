@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,11 +14,14 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"  rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@1.4.1/dist/flowbite.min.js"></script>    
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
-
+{{--}}
 <style>
     .one-section {
         position: relative;
@@ -132,79 +136,71 @@
         text-decoration: none;
     }
 </style>
-
+{{--}}
 <body>
-    <section class="one-section">
-
-        <div class="div-form">
-
-            <div class="div-form2">
-                <p class="login-p">REGISTRARTE</p>
-            </div>
-
-            <form method="POST" action="{{ route('register') }}" class="form-login">
+    <section class="bg-gray-50 dark:bg-gray-900">
+        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+          <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+            <img class="w-8 h-8 mr-2" src="img/chat-seguro.png" alt="logo">
+            Nice Chat    
+          </a>
+          <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+              <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                Regístrate
+              </h1>
+      
+              <form method="POST" action="{{ route('register') }}" class="space-y-4 md:space-y-6">
                 @csrf
-
-                <div class="mb-3">
-                    <label for="name" class="label-login">{{ __('Name') }}</label>
-
-                    <input id="name" type="text" class="form-custom @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                    @error('name')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-
+      
+                <div>
+                  <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
+                  <input id="name" type="text" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('name') is-invalid @enderror">
+                  @error('name')
+                  <span class="text-red-500 text-sm" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror
                 </div>
-
-                <div class="mb-3">
-                    <label for="email" class="label-login">{{ __('Email Address') }}</label>
-
-                    <input id="email" type="email" class="form-custom @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                    @error('email')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-
+      
+                <div>
+                  <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Correo electrónico</label>
+                  <input id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="email" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('email') is-invalid @enderror">
+                  @error('email')
+                  <span class="text-red-500 text-sm" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror
                 </div>
-
-                <div class="mb-3">
-                    <label for="password" class="label-login">{{ __('Password') }}</label>
-
-
-                    <input id="password" type="password" class="form-custom @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                    @error('password')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-
+      
+                <div>
+                  <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
+                  <input id="password" type="password" name="password" required autocomplete="new-password" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('password') is-invalid @enderror">
+                  @error('password')
+                  <span class="text-red-500 text-sm" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror
                 </div>
-
-                <div class="mb-3">
-                    <label for="password-confirm" class="label-login">{{ __('Confirm Password') }}</label>
-
-                    <input id="password-confirm" type="password" class="form-custom" name="password_confirmation" required autocomplete="new-password">
-
+      
+                <div>
+                  <label for="password-confirm" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirmar contraseña</label>
+                  <input id="password-confirm" type="password" name="password_confirmation" required autocomplete="new-password" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 </div>
-
-                <div class="center-btn">
-                    <button type="submit" class="btn btn-outline-light btn-custom">
-                        {{ __('Register') }}
-                    </button>
-                </div>
-            </form>
-
-            <div class="div-form3">
-                <p class="login-p2">Si ya tienes cuenta <a href="{{ route('login') }}" class="login-a">Inicia Sesion</a>
+      
+                <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                  Registrarse
+                </button>
+      
+                <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+                  ¿Ya tienes cuenta? <a href="{{ route('login') }}" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Inicia Sesión</a>
+                </p>
+              </form>
             </div>
-
+          </div>
         </div>
-    </section>
+      </section>
+      
 </body>
 
 </html>
