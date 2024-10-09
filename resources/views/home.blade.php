@@ -7,6 +7,7 @@
                 <!-- Lista de contactos -->
                 <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
                     <h5 class="font-weight-bold mb-3 text-center text-lg-start">Chats</h5>
+                    <a href="{{ route('new.message') }}" class="btn btn-primary d-block mx-auto mb-4">Enviar mensaje</a>
                     <div class="card">
                         <div class="card-body">
                             @if ($contactos->isEmpty())

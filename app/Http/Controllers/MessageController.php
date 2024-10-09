@@ -3,25 +3,32 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
+    public function newMessage()
+    {
+        $currentUser = Auth::user();
+        
+        if (!$currentUser) {
+            return redirect()->route('login');
+        }
+
+        return view('message.index');
+    }
     public function showConversation($contactId = null)
     {
         $currentUser = Auth::user();
         
-        // Si no hay contacto seleccionado, `$contact` será null.
         $contact = $contactId ? User::find($contactId) : null;
 
         if ($contact && !$contact->exists) {
             return redirect()->route('home')->with('error', 'Contacto no encontrado');
         }
 
-        // Obtener los contactos
         $contactos = $this->getContactInfo($currentUser);
 
         $selectedContact = User::find($contactId);
@@ -36,7 +43,6 @@ class MessageController extends Controller
         ->orderBy('created_at', 'asc')
         ->get();
 
-        // Pasar a la vista
         return view('home', compact('contact', 'mensajes', 'contactos', 'selectedContact'));
     }
 
@@ -63,6 +69,22 @@ class MessageController extends Controller
         $mensaje->save();
 
         return redirect()->route('conversation', $contactId)->with('success', 'Mensaje enviado');
+    }
+
+    public function searchUser(Request $request) {
+        $request->validate([
+            'contact' => 'required|email',
+            'message' => 'required|string|max:255',
+        ]);
+
+        $user = User::where('email', $request->contact)->first();
+
+
+        if (!$user) {
+            return redirect()->route('new.message')->with('error', 'Usuario no encontrado');
+        }
+
+        return $this->sendMessage($request, $user->id);
     }
 
     private function getContactInfo($currentUser)

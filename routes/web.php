@@ -20,9 +20,9 @@ Route::get('verify-code', [VerificationController::class, 'showVerifyCodeForm'])
 Route::post('verify-code', [RegisterController::class, 'verifyCode'])->name('verify.code');
 
 // Rutas de mensajes
-Route::get('/new-message', [MessageController::class, 'index'])->name('new.message');
+Route::get('/new-message', [MessageController::class, 'newMessage'])->name('new.message');
 Route::get('/conversation/{contactId}', [MessageController::class, 'showConversation'])->name('conversation');
 Route::post('/send-message/{contactId}', [MessageController::class, 'sendMessage'])->name('sendMessage');
+Route::post('/search-user', [MessageController::class, 'searchUser'])->name('searchUser');
 
 Route::get('/mensajes/{contacto}', [MessageController::class, 'show'])->name('mensajes.show');
-
