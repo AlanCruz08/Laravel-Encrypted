@@ -25,15 +25,19 @@ class ChatController extends Controller
         $contactos = DB::table('users as u')
         ->select('u.*', 
                 DB::raw('(SELECT content FROM messages as m
-                        WHERE m.receiver_id = ' . auth()->user()->id . ' 
-                        AND m.sender_id = u.id
+                        WHERE (m.sender_id = ' . auth()->user()->id . '
+                        AND  m.receiver_id = u.id) 
+                        OR (m.receiver_id = ' . auth()->user()->id . '
+                        AND m.sender_id = u.id)
                         ORDER BY m.created_at DESC LIMIT 1) as lastMessage'),
                 DB::raw('(SELECT DATE_FORMAT(m.created_at, "%H:%i") 
-                            FROM messages as m
-                            WHERE m.receiver_id = ' . auth()->user()->id . ' 
-                            AND m.sender_id = u.id
-                            ORDER BY m.created_at DESC 
-                            LIMIT 1) as hora'))
+                        FROM messages as m
+                        WHERE (m.sender_id = ' . auth()->user()->id . '
+                        AND  m.receiver_id = u.id) 
+                        OR (m.receiver_id = ' . auth()->user()->id . '
+                        AND m.sender_id = u.id)
+                        ORDER BY m.created_at DESC 
+                        LIMIT 1) as hora'))
         ->where('u.id', '!=', auth()->user()->id)
         ->get();
 
