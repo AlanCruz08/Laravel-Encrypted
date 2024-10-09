@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->text('content');
+            $table->text('content'); // Cambiar el nombre del campo a 'content'
             $table->foreignId('sender_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('receiver_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
