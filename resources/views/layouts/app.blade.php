@@ -12,6 +12,8 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -20,7 +22,7 @@
     <div id="app">
         <nav class="navbar py-20 navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/home') }}">
+                <a class="navbar-brand" href="{{ url('/chat/1') }}">
                     <img class="w-auto h-auto mr-2" src="/img/messages_chat_icon.png" alt="logo">
                     Chat App
                 </a>
