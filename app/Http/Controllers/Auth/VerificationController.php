@@ -13,4 +13,8 @@ class VerificationController extends Controller
     {
         return view('auth.verify');  // Vista donde el usuario ingresa el código
     }
+
+    public function showVerifyCodeFormLogin(){
+        return view('auth.verifyLogin');
+    }
 }

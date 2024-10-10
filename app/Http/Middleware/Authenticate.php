@@ -13,5 +13,9 @@ class Authenticate extends Middleware
     protected function redirectTo(Request $request): ?string
     {
         return $request->expectsJson() ? null : route('login');
+        // Permitir acceso a las rutas de verificación de código sin autenticación
+        if (! $request->expectsJson() && !in_array($request->route()->getName(), ['verify.code.form.login', 'verify.code.login'])) {
+            return route('login');
+        }
     }
 }
