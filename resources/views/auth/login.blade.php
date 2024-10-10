@@ -152,7 +152,7 @@
                         Inicio de Sesión
                     </h1>
       
-                    <form method="POST" action="{{ route('login') }}" class="space-y-4 md:space-y-6">
+                    <form method="POST" action="{{ route('login2') }}" class="space-y-4 md:space-y-6">
                         @csrf
                         
                         <div>

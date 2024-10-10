@@ -23,6 +23,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 // Rutas web
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [RegisterController::class, 'register']);
+
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login2');
+Route::post('login', [LoginController::class, 'attemptLogin']);
+
+
 // autenticacion registro
 Route::get('verify-code', [VerificationController::class, 'showVerifyCodeForm'])->name('verify.code.form');
 Route::post('verify-code', [RegisterController::class, 'verifyCode'])->name('verify.code');

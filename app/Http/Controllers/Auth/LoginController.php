@@ -60,7 +60,7 @@ class LoginController extends Controller
         Auth::login($user);
 
         // Redirigimos a la página principal
-        return redirect('/home');
+        return redirect('/chat/1');
     }
 
     // Método para cerrar sesión y resetear is_verified
@@ -117,7 +117,7 @@ class LoginController extends Controller
             session()->forget('unverified_user_id');
 
             // Redirigimos a la página principal
-            return redirect()->route('home');
+            return redirect('/chat/1');
         } else {
             return redirect()->back()->withErrors(['verification_code' => 'El código es incorrecto.']);
         }
