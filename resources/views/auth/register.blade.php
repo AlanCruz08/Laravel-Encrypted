@@ -193,7 +193,7 @@
                 </button>
       
                 <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                  ¿Ya tienes cuenta? <a href="{{ route('login') }}" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Inicia Sesión</a>
+                  ¿Ya tienes cuenta? <a href="{{ route('login2') }}" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Inicia Sesión</a>
                 </p>
               </form>
             </div>
