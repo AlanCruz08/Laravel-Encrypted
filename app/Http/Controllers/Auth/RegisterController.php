@@ -57,7 +57,7 @@ class RegisterController extends Controller
         $user->verification_code = null; // Limpia el código de verificación
         $user->save();
 
-        return redirect()->route('login')->with('status', 'Tu cuenta ha sido verificada exitosamente.');
+        return redirect()->route('login2')->with('status', 'Tu cuenta ha sido verificada exitosamente.');
     }
 
     public function showRegistrationForm()
